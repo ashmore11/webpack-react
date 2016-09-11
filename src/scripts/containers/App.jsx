@@ -1,13 +1,13 @@
 import React, { PropTypes } from 'react';
 
 import 'styles/main.scss';
+import testImg from 'images/test-image.jpg';
 
 export default function App({ text }) {
-  console.log('some test');
   return (
     <div>
       {text}
-      <span> Testing</span>
+      <img srcSet={testImg} alt="" />
     </div>
   );
 }

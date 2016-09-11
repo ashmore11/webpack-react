@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "start": "node devServer.js",
-    "build": "./node_modules/.bin/webpack -p",
+    "build-dev": "./node_modules/.bin/webpack --config=webpack.dev.js -d",
+    "build-prod": "./node_modules/.bin/webpack --config=webpack.prod.js -p",
+    "vendors": "./node_modules/.bin/webpack --config=webpack.vendors.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -27,9 +29,12 @@
     "eslint-plugin-jsx-a11y": "^0.6.x",
     "eslint-plugin-react": "^4.3.x",
     "express": "^4.14.0",
+    "favicons-webpack-plugin": "0.0.7",
     "file-loader": "^0.9.0",
     "fontmin-loader": "0.0.1",
     "gridle": "^2.0.48",
+    "html-webpack-plugin": "^2.22.0",
+    "image-webpack-loader": "^2.0.0",
     "import-glob-loader": "^1.1.0",
     "node-sass": "^3.9.3",
     "normalize.css": "^4.2.0",

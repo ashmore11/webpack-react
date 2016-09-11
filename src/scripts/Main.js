@@ -8,7 +8,7 @@ export default class Root {
   constructor(rootElement) {
     ReactDOM.render(
       <AppContainer>
-        <App text="Hello World!"/>
+        <App text="Hello World!" />
       </AppContainer>,
       rootElement
     );
@@ -18,7 +18,7 @@ export default class Root {
         const NextApp = require('containers/App').default;
         ReactDOM.render(
           <AppContainer>
-             <NextApp text="Hello World!"/>
+             <NextApp text="Hello World!" />
           </AppContainer>,
           rootElement
         );
