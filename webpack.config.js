@@ -71,34 +71,34 @@ const common = {
 
 let config;
 
-switch (process.env.NODE_ENV) {
-  case 'dev':
-    config = merge(common, {
-      devtool: 'eval',
-      entry: [
-        'react-hot-loader/patch',
-        'webpack-dev-server/client?http://localhost:3000',
-        'webpack/hot/only-dev-server',
-      ],
-      plugins: [
-        new webpack.HotModuleReplacementPlugin(),
-        new webpack.DllReferencePlugin({
-          context: PATHS.src,
-          manifest: require(`${PATHS.dist}/scripts/vendors.manifest.json`),
-        }),
-      ],
-    });
-    break;
-  default:
-    config = merge(common, {
-      devtool: 'cheap-module-source-map',
-      plugins: [
-        new webpack.optimize.UglifyJsPlugin({
-          comments: false,
-          compress: { warnings: false },
-        }),
-      ],
-    });
+if (process.env.NODE_ENV === 'dev') {
+  config = merge(common, {
+    devtool: 'eval',
+    entry: [
+      'react-hot-loader/patch',
+      'webpack-dev-server/client?http://localhost:3000',
+      'webpack/hot/only-dev-server',
+    ],
+    plugins: [
+      new webpack.HotModuleReplacementPlugin(),
+      new webpack.DllReferencePlugin({
+        context: PATHS.src,
+        manifest: require(`${PATHS.dist}/scripts/vendors.manifest.json`),
+      }),
+    ],
+  });
+}
+
+if (process.env.NODE_ENV === 'prod') {
+  config = merge(common, {
+    devtool: 'cheap-module-source-map',
+    plugins: [
+      new webpack.optimize.UglifyJsPlugin({
+        comments: false,
+        compress: { warnings: false },
+      }),
+    ],
+  });
 }
 
 module.exports = validate(config);
