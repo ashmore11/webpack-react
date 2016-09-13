@@ -10,13 +10,13 @@ module.exports = {
   },
   output: {
     filename: '[name].js',
-    path: path.join(__dirname, 'dist/scripts'),
+    path: path.join(__dirname, 'dist'),
     library: '[name]',
   },
   plugins: [
     new webpack.DllPlugin({
       name: '[name]',
-      path: path.join(__dirname, 'dist/scripts', '[name].manifest.json'),
+      path: path.join(__dirname, 'dist', '[name].manifest.json'),
       context: path.resolve(__dirname, 'src'),
     }),
   ],

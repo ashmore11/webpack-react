@@ -1,3 +1,5 @@
-.Home {
-  display: block;
+.title {
+  @include gridle(12);
+  
+  font-size: 100px;
 }

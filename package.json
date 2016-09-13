@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "NODE_ENV=dev node devServer.js",
+    "start": "NODE_ENV=dev node webpack.server.js",
     "build": "NODE_ENV=prod ./node_modules/.bin/webpack --config=webpack.config.js -p",
     "vendors": "./node_modules/.bin/webpack --config=webpack.vendors.js",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -28,6 +28,7 @@
     "eslint-plugin-jsx-a11y": "^0.6.x",
     "eslint-plugin-react": "^4.3.x",
     "express": "^4.14.0",
+    "extract-text-webpack-plugin": "^1.0.1",
     "favicons-webpack-plugin": "0.0.7",
     "file-loader": "^0.9.0",
     "fontmin-loader": "0.0.1",
