@@ -20,7 +20,7 @@ const common = {
   ],
   output: {
     path: PATHS.dist,
-    filename: 'bundle.js',
+    filename: 'scripts/bundle.js',
     publicPath: '/dist/',
   },
   plugins: [
