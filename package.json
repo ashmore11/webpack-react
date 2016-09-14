@@ -4,15 +4,19 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "clean": "rm -rf /dist/*",
     "start": "NODE_ENV=dev node webpack.server.js",
     "build": "NODE_ENV=prod ./node_modules/.bin/webpack --config=webpack.config.js -p",
     "vendors": "./node_modules/.bin/webpack --config=webpack.vendors.js",
+    "dev": "npm run vendors && npm start",
+    "prod": "npm run vendors && npm run build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "add-asset-html-webpack-plugin": "^1.0.2",
     "autoprefixer": "^6.4.1",
     "babel-core": "^6.14.0",
     "babel-loader": "^6.2.5",

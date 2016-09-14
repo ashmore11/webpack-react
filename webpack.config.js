@@ -4,6 +4,7 @@ const autoprefixer = require('autoprefixer');
 const mqpacker = require('css-mqpacker');
 const ProgressBarPlugin = require('progress-bar-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const AddAssetHtmlPlugin = require('add-asset-html-webpack-plugin');
 const browsers = require('./package.json').config.browsers;
 const merge = require('webpack-merge');
 const validate = require('webpack-validator');
@@ -21,16 +22,21 @@ const common = {
   output: {
     path: PATHS.dist,
     filename: 'scripts/bundle.js',
-    publicPath: '/dist/',
+    publicPath: '/',
   },
   plugins: [
     new ProgressBarPlugin({ clear: false }),
+    new HtmlWebpackPlugin({
+      template: `${PATHS.src}/index.html`,
+    }),
+    new AddAssetHtmlPlugin({
+      filepath: `${PATHS.dist}/scripts/vendors.js`,
+      includeSourcemap: false,
+      publicPath: '/scripts/',
+    }),
     new webpack.DllReferencePlugin({
       context: PATHS.src,
-      manifest: require(`${PATHS.dist}/vendors.manifest.json`),
-    }),
-    new HtmlWebpackPlugin({
-      template: path.resolve(__dirname, 'index.html'),
+      manifest: require(`${PATHS.dist}/scripts/vendors.manifest.json`),
     }),
   ],
   module: {
@@ -38,6 +44,7 @@ const common = {
       test: /\.jsx?$/,
       loader: 'babel',
       include: `${PATHS.src}/scripts`,
+      query: { cacheDirectory: true },
     }, {
       test: /\.scss$/,
       loaders: ['style', 'css', 'postcss', 'sass', 'import-glob'],
@@ -80,6 +87,7 @@ let config;
 
 if (process.env.NODE_ENV === 'dev') {
   config = merge(common, {
+    cache: true,
     devtool: 'eval',
     entry: [
       'react-hot-loader/patch',
