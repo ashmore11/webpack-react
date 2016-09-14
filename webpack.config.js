@@ -87,8 +87,9 @@ let config;
 
 if (process.env.NODE_ENV === 'dev') {
   config = merge(common, {
+    debug: true,
     cache: true,
-    devtool: 'eval',
+    devtool: 'cheap-module-eval-source-map',
     entry: [
       'react-hot-loader/patch',
       'webpack-dev-server/client?http://localhost:3000',
