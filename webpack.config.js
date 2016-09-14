@@ -3,6 +3,7 @@ const webpack = require('webpack');
 const autoprefixer = require('autoprefixer');
 const mqpacker = require('css-mqpacker');
 const ProgressBarPlugin = require('progress-bar-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 const browsers = require('./package.json').config.browsers;
 const merge = require('webpack-merge');
 const validate = require('webpack-validator');
@@ -19,31 +20,38 @@ const common = {
   ],
   output: {
     path: PATHS.dist,
-    filename: 'bundle.js',
-    publicPath: '/dist/scripts/',
+    filename: 'scripts/bundle.js',
+    publicPath: '/dist/',
   },
   plugins: [
     new ProgressBarPlugin({ clear: false }),
+    new webpack.DllReferencePlugin({
+      context: PATHS.src,
+      manifest: require(`${PATHS.dist}/vendors.manifest.json`),
+    }),
+    new HtmlWebpackPlugin({
+      template: path.resolve(__dirname, 'index.html'),
+    }),
   ],
   module: {
     loaders: [{
       test: /\.jsx?$/,
-      loaders: ['babel'],
+      loader: 'babel',
       include: `${PATHS.src}/scripts`,
     }, {
       test: /\.scss$/,
       loaders: ['style', 'css', 'postcss', 'sass', 'import-glob'],
       include: `${PATHS.src}/styles`,
     }, {
-      test: /\.(jpe?g|png|gif|svg)$/i,
+      test: /\.(jpg|png|gif|svg)$/i,
       loaders: [
-        'file?hash=sha512&digest=hex&name=[hash].[ext]',
+        'file?hash=sha512&digest=hex&name=images/[name].[ext]',
         'image-webpack?bypassOnDebug&optimizationLevel=7&interlaced=false',
       ],
       include: `${PATHS.src}/images`,
     }, {
       test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-      loader: 'file',
+      loader: 'file?name=fonts/[name].[ext]',
       include: `${PATHS.src}/styles/fonts`,
     }],
   },
@@ -54,7 +62,7 @@ const common = {
     ],
   },
   resolve: {
-    extensions: ['', '.js', '.jsx', '.scss'],
+    extensions: ['', '.js', '.jsx', '.scss', '.jpg', '.png'],
     alias: {
       app: `${PATHS.src}/scripts`,
       actions: `${PATHS.src}/scripts/actions`,
@@ -68,7 +76,6 @@ const common = {
   },
 };
 
-
 let config;
 
 if (process.env.NODE_ENV === 'dev') {
@@ -81,10 +88,6 @@ if (process.env.NODE_ENV === 'dev') {
     ],
     plugins: [
       new webpack.HotModuleReplacementPlugin(),
-      new webpack.DllReferencePlugin({
-        context: PATHS.src,
-        manifest: require(`${PATHS.dist}/scripts/vendors.manifest.json`),
-      }),
     ],
   });
 }
