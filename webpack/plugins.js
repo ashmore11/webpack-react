@@ -22,8 +22,10 @@ const plugins = [
   }),
   new AddAssetHtmlPlugin({
     filepath: `${PATHS.dist}/scripts/vendors.js`,
+    outputPath: 'scripts',
     includeSourcemap: false,
     publicPath: '/scripts/',
+    hash: true,
   }),
   new webpack.DllReferencePlugin({
     context: PATHS.src,
