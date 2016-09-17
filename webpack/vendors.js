@@ -1,33 +1,38 @@
 const path = require('path');
 const webpack = require('webpack');
 
-module.exports = {
+const config = {
   entry: {
     vendors: [
       'react',
       'react-dom',
+      'react-redux',
+      'react-router',
+      'react-router-redux',
+      'redux',
     ],
   },
   output: {
     filename: '[name].js',
-    path: path.join(process.env.PWD, 'dist/scripts'),
+    path: path.resolve(process.env.PWD, 'dist/scripts'),
     library: '[name]',
   },
-  plugins: process.env.NODE_ENV === 'dev' ? [
+  plugins: [
     new webpack.DllPlugin({
       name: '[name]',
-      path: path.join(process.env.PWD, 'dist/scripts', '[name].manifest.json'),
+      path: path.resolve(process.env.PWD, 'dist/scripts', '[name].manifest.json'),
       context: path.resolve(process.env.PWD, 'src'),
     }),
-  ] : [
-    new webpack.DllPlugin({
-      name: '[name]',
-      path: path.join(process.env.PWD, 'dist/scripts', '[name].manifest.json'),
-      context: path.resolve(process.env.PWD, 'src'),
-    }),
+  ],
+};
+
+if (process.env.NODE_ENV === 'production') {
+  config.plugins.push(...[
     new webpack.optimize.UglifyJsPlugin({
       comments: false,
       compress: { warnings: false },
     }),
-  ],
-};
+  ]);
+}
+
+module.exports = config;
