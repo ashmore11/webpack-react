@@ -87,6 +87,6 @@ const common = {
   },
 };
 
-const config = DEV ? merge(common, configProd) : merge(common, configDev);
+const config = DEV ? merge(common, configDev) : merge(common, configProd);
 
 module.exports = validate(config);
