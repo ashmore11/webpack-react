@@ -5,13 +5,16 @@ const mqpacker = require('css-mqpacker');
 const ProgressBarPlugin = require('progress-bar-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const AddAssetHtmlPlugin = require('add-asset-html-webpack-plugin');
-const browsers = require('./package.json').config.browsers;
+const browsers = require('../package.json').config.browsers;
 const merge = require('webpack-merge');
 const validate = require('webpack-validator');
+const configDev = require('./webpack.dev');
+const configProd = require('./webpack.prod');
 
+const DEV = process.env.NODE_ENV === 'dev';
 const PATHS = {
-  src: path.resolve(__dirname, 'src'),
-  dist: path.resolve(__dirname, 'dist'),
+  src: path.resolve(process.env.PWD, 'src'),
+  dist: path.resolve(process.env.PWD, 'dist'),
 };
 
 const common = {
@@ -28,6 +31,7 @@ const common = {
     new ProgressBarPlugin({ clear: false }),
     new HtmlWebpackPlugin({
       template: `${PATHS.src}/index.html`,
+      hash: true,
     }),
     new AddAssetHtmlPlugin({
       filepath: `${PATHS.dist}/scripts/vendors.js`,
@@ -83,34 +87,6 @@ const common = {
   },
 };
 
-let config;
-
-if (process.env.NODE_ENV === 'dev') {
-  config = merge(common, {
-    debug: true,
-    cache: true,
-    devtool: 'cheap-module-eval-source-map',
-    entry: [
-      'react-hot-loader/patch',
-      'webpack-dev-server/client?http://localhost:3000',
-      'webpack/hot/only-dev-server',
-    ],
-    plugins: [
-      new webpack.HotModuleReplacementPlugin(),
-    ],
-  });
-}
-
-if (process.env.NODE_ENV === 'prod') {
-  config = merge(common, {
-    devtool: 'cheap-module-source-map',
-    plugins: [
-      new webpack.optimize.UglifyJsPlugin({
-        comments: false,
-        compress: { warnings: false },
-      }),
-    ],
-  });
-}
+const config = DEV ? merge(common, configProd) : merge(common, configDev);
 
 module.exports = validate(config);

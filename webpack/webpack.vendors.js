@@ -10,20 +10,20 @@ module.exports = {
   },
   output: {
     filename: '[name].js',
-    path: path.join(__dirname, 'dist/scripts'),
+    path: path.join(process.env.PWD, 'dist/scripts'),
     library: '[name]',
   },
   plugins: process.env.NODE_ENV === 'dev' ? [
     new webpack.DllPlugin({
       name: '[name]',
-      path: path.join(__dirname, 'dist/scripts', '[name].manifest.json'),
-      context: path.resolve(__dirname, 'src'),
+      path: path.join(process.env.PWD, 'dist/scripts', '[name].manifest.json'),
+      context: path.resolve(process.env.PWD, 'src'),
     }),
   ] : [
     new webpack.DllPlugin({
       name: '[name]',
-      path: path.join(__dirname, 'dist/scripts', '[name].manifest.json'),
-      context: path.resolve(__dirname, 'src'),
+      path: path.join(process.env.PWD, 'dist/scripts', '[name].manifest.json'),
+      context: path.resolve(process.env.PWD, 'src'),
     }),
     new webpack.optimize.UglifyJsPlugin({
       comments: false,

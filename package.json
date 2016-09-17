@@ -5,11 +5,11 @@
   "main": "index.js",
   "scripts": {
     "clean": "rm -rf /dist/*",
-    "start": "node webpack.server.js",
-    "build": "./node_modules/.bin/webpack --config=webpack.config.js -p",
-    "vendors": "./node_modules/.bin/webpack --config=webpack.vendors.js",
+    "start": "node webpack/webpack.server.js",
+    "build": "./node_modules/.bin/webpack --config=webpack/webpack.config.js -p",
+    "vendors": "./node_modules/.bin/webpack --config=webpack/webpack.vendors.js",
     "dev": "NODE_ENV=dev npm run vendors && NODE_ENV=dev npm start",
-    "prod": "NODE_ENV=prod npm run vendors && NODE_ENV=prod npm run build",
+    "prod": "NODE_ENV=production npm run vendors && NODE_ENV=production npm run build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
