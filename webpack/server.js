@@ -11,9 +11,9 @@ const compiler = webpack(config);
 app.use(webpackDevMiddleware(compiler, {
   publicPath: config.output.publicPath,
   contentBase: config.output.path,
-  hot: true,
   historyApiFallback: true,
   noInfo: true,
+  hot: true,
 }));
 
 app.use(webpackHotMiddleware(compiler));
