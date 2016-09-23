@@ -20,7 +20,7 @@ app.use(webpackHotMiddleware(compiler));
 app.use(express.static(dist));
 
 app.get('*', (request, response) => {
-  response.sendfile(`${dist}/index.html`);
+  response.sendFile(`${dist}/index.html`);
 });
 
 app.listen(3000);

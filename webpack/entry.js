@@ -9,7 +9,7 @@ const entry = [
 ];
 
 if (process.env.NODE_ENV === 'dev') {
-  const whmQuery = querystring.stringify({
+  const hotQuery = querystring.stringify({
     path: '/__webpack_hmr',
     timeout: 20000,
     reload: true,
@@ -18,7 +18,7 @@ if (process.env.NODE_ENV === 'dev') {
 
   entry.push(...[
     'react-hot-loader/patch',
-    `webpack-hot-middleware/client?${querystring.unescape(whmQuery)}`,
+    `webpack-hot-middleware/client?${querystring.unescape(hotQuery)}`,
   ]);
 }
 

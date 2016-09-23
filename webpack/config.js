@@ -1,6 +1,5 @@
 const path = require('path');
 const autoprefixer = require('autoprefixer');
-const mqpacker = require('css-mqpacker');
 const browsers = require('../package.json').config.browsers;
 const entry = require('./entry');
 const loaders = require('./loaders');
@@ -25,15 +24,8 @@ const config = {
     publicPath: '/',
   },
   plugins,
-  module: {
-    loaders,
-  },
-  postcss: {
-    defaults: [
-      autoprefixer({ browsers }),
-      mqpacker,
-    ],
-  },
+  module: { loaders },
+  postcss: { defaults: [autoprefixer({ browsers })] },
   resolve,
 };
 
