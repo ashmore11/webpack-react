@@ -35,7 +35,9 @@ const plugins = [
 
 if (process.env.NODE_ENV === 'dev') {
   plugins.push(...[
+    new webpack.optimize.OccurenceOrderPlugin(),
     new webpack.HotModuleReplacementPlugin(),
+    new webpack.NoErrorsPlugin(),
   ]);
 }
 

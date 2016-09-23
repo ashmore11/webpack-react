@@ -1,13 +1,26 @@
 const webpack = require('webpack');
-const WebpackDevServer = require('webpack-dev-server');
+const webpackDevMiddleware = require('webpack-dev-middleware');
+const webpackHotMiddleware = require('webpack-hot-middleware');
 const config = require('./config.js');
+const express = require('express');
+const app = express();
 
-const server = new WebpackDevServer(webpack(config), {
+const dist = `${process.env.PWD}/dist`;
+const compiler = webpack(config);
+
+app.use(webpackDevMiddleware(compiler, {
   publicPath: config.output.publicPath,
   contentBase: config.output.path,
   hot: true,
   historyApiFallback: true,
   noInfo: true,
+}));
+
+app.use(webpackHotMiddleware(compiler));
+app.use(express.static(dist));
+
+app.get('*', (request, response) => {
+  response.sendfile(`${dist}/index.html`);
 });
 
-server.listen(3000, 'localhost');
+app.listen(3000);
