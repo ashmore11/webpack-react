@@ -9,7 +9,18 @@ const loaders = [{
   test: /\.jsx?$/,
   loader: 'babel',
   include: `${PATHS.src}/scripts`,
-  query: { cacheDirectory: true },
+  query: {
+    cacheDirectory: true,
+    presets: [
+      'react',
+      'es2015',
+      'stage-0',
+    ],
+    plugins: [
+      'react-hot-loader/babel',
+      'transform-object-rest-spread',
+    ],
+  },
 }, {
   test: /\.scss$/,
   loaders: ['style', 'css', 'postcss', 'sass', 'import-glob'],
