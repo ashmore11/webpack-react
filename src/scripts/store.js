@@ -1,11 +1,9 @@
 import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
-import { routerReducer } from 'react-router-redux';
 
 import count from 'reducers/count';
 
 const reducer = combineReducers({
-  routing: routerReducer,
   count,
 });
 

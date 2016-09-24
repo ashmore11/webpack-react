@@ -1,5 +1,7 @@
-.title {
+.Home {
   @include gridle(12);
   
-  font-size: 100px;
+  button {
+    display: block;
+  }
 }

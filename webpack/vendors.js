@@ -1,15 +1,20 @@
 const path = require('path');
 const webpack = require('webpack');
 
+const DEV = process.env.NODE_ENV === 'dev';
+
 const config = {
+  debug: DEV,
+  cache: true,
+  devtool: DEV ? 'cheap-module-eval-source-map' : 'cheap-module-source-map',
   entry: {
     vendors: [
       'react',
       'react-dom',
       'react-redux',
       'react-router',
-      'react-router-redux',
       'redux',
+      'redux-thunk',
     ],
   },
   output: {
