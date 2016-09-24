@@ -19,6 +19,7 @@ const loaders = [{
     plugins: [
       'react-hot-loader/babel',
       'transform-object-rest-spread',
+      'transform-decorators-legacy',
     ],
   },
 }, {
