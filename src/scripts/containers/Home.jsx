@@ -17,6 +17,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 @connect(mapStateToProps, mapDispatchToProps)
+
 export default class Home extends Component {
   static propTypes = {
     count: PropTypes.number.isRequired,
@@ -24,8 +25,8 @@ export default class Home extends Component {
     onDecrement: PropTypes.func.isRequired,
   };
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.buttonClicked = ::this.buttonClicked;
   }

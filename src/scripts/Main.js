@@ -7,7 +7,7 @@ import store from 'app/store';
 
 import App from 'containers/App';
 
-export default class Root {
+export default class Main {
   constructor(rootElement) {
     ReactDOM.render(
       <AppContainer>
