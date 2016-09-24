@@ -13,7 +13,7 @@ if (process.env.NODE_ENV === 'dev') {
     path: '/__webpack_hmr',
     timeout: 20000,
     reload: true,
-    noInfo: true,
+    noInfo: false,
   });
 
   entry.push(...[

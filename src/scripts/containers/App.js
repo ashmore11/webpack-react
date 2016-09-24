@@ -13,7 +13,7 @@ import 'styles/main';
 export default function App() {
   return (
     <BrowserRouter>
-      <div>
+      <div className="App">
         <MainHeader />
         <Match exactly pattern="/" component={Home} />
         <Match pattern="/about" component={About} />

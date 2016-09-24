@@ -16,7 +16,7 @@ const PATHS = {
 const config = {
   debug: DEV,
   cache: true,
-  devtool: DEV ? 'cheap-module-eval-source-map' : 'cheap-module-source-map',
+  devtool: DEV ? 'eval' : 'cheap-module-source-map',
   entry,
   output: {
     path: PATHS.dist,
