@@ -5,12 +5,13 @@ import { firebase, helpers } from 'redux-react-firebase';
 const { isLoaded, dataToJS } = helpers;
 
 const mapStateToProps = (state) => ({
-  about: dataToJS(state.firebase, '/about'),
+  about: dataToJS(state.firebase, 'about'),
 });
 
-@firebase(['/about'])
+@firebase(['about'])
 @connect(mapStateToProps)
 
+// eslint-disable-next-line react/prefer-stateless-function
 export default class About extends Component {
   static propTypes = {
     firebase: PropTypes.object,
