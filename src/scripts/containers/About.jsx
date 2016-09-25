@@ -1,12 +1,31 @@
-import React from 'react';
+import React, { Component, PropTypes } from 'react';
+import { connect } from 'react-redux';
+import { firebase, helpers } from 'redux-react-firebase';
 
-import image from 'images/test-image';
+const { isLoaded, dataToJS } = helpers;
 
-export default function About() {
-  return (
-    <div className="About">
-      <h2>About</h2>
-      <img src={image} alt="" />
-    </div>
-  );
+const mapStateToProps = (state) => ({
+  about: dataToJS(state.firebase, '/about'),
+});
+
+@firebase(['/about'])
+@connect(mapStateToProps)
+
+export default class About extends Component {
+  static propTypes = {
+    firebase: PropTypes.object,
+    about: PropTypes.object,
+  };
+
+  render() {
+    const { about } = this.props;
+
+    if (!isLoaded(about)) return <span>Loading</span>;
+
+    return (
+      <div className="About">
+        <h2>{about.title}</h2>
+      </div>
+    );
+  }
 }
