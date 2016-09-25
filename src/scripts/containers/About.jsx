@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { firebase as fb, helpers } from 'redux-react-firebase';
+import { firebase as db, helpers } from 'redux-react-firebase';
 
 const { isLoaded, dataToJS } = helpers;
 
@@ -8,7 +8,7 @@ const mapStateToProps = (state) => ({
   about: dataToJS(state.firebase, 'about'),
 });
 
-@fb(['about'])
+@db(['about'])
 @connect(mapStateToProps)
 
 export default class About extends Component {
@@ -20,12 +20,12 @@ export default class About extends Component {
   constructor(props) {
     super(props);
 
-    this.handleClick = ::this.handleClick;
+    this.handleUpdate = ::this.handleUpdate;
   }
 
-  handleClick() {
+  handleUpdate(event) {
     const { firebase } = this.props;
-    const text = this.refs.text.value;
+    const text = event.target.value;
 
     firebase.set('/about/text', text);
   }
@@ -39,8 +39,7 @@ export default class About extends Component {
       <div className="About">
         <h2>{about.title}</h2>
         <p>{about.text}</p>
-        <input type="text" ref="text" />
-        <button onClick={this.handleClick}>Add Text</button>
+        <input type="text" ref="text" onChange={this.handleUpdate} />
       </div>
     );
   }
