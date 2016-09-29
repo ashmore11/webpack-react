@@ -12,7 +12,6 @@ const config = {
       'react',
       'react-dom',
       'react-redux',
-      'react-router',
       'redux',
       'redux-thunk',
     ],

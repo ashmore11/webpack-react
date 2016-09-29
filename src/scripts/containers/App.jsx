@@ -1,25 +1,56 @@
-import React from 'react';
-import { BrowserRouter, Match, Miss } from 'react-router';
+import React, { PropTypes, Component } from 'react';
+import { connect } from 'react-redux';
 
-import MainHeader from 'components/MainHeader';
-
-import Home from 'containers/Home';
-import About from 'containers/about';
-import Topics from 'containers/Topics';
-import NotFound from 'containers/NotFound';
+import { increment, decrement } from 'actions/count';
 
 import 'styles/main';
 
-export default function App() {
-  return (
-    <BrowserRouter>
+const mapStateToProps = (state) => ({
+  count: state.count,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  onIncrement: () => {
+    dispatch(increment());
+  },
+  onDecrement: () => {
+    dispatch(decrement());
+  },
+});
+
+@connect(mapStateToProps, mapDispatchToProps)
+
+export default class App extends Component {
+  static propTypes = {
+    count: PropTypes.number.isRequired,
+    onIncrement: PropTypes.func.isRequired,
+    onDecrement: PropTypes.func.isRequired,
+  };
+
+  constructor(props) {
+    super(props);
+
+    this.buttonClicked = ::this.buttonClicked;
+  }
+
+  buttonClicked(event) {
+    const { onIncrement, onDecrement } = this.props;
+    if (event.target.id === 'increment') {
+      onIncrement();
+    } else {
+      onDecrement();
+    }
+  }
+
+  render() {
+    const { count } = this.props;
+    return (
       <div className="App">
-        <MainHeader />
-        <Match exactly pattern="/" component={Home} />
-        <Match pattern="/about" component={About} />
-        <Match pattern="/topics" component={Topics} />
-        <Miss component={NotFound} />
+        <h2>App</h2>
+        <span>Count: {count}</span>
+        <button id="increment" onClick={this.buttonClicked}>INCREMENT</button>
+        <button id="decrement" onClick={this.buttonClicked}>DECREMENT</button>
       </div>
-    </BrowserRouter>
-  );
+    );
+  }
 }
