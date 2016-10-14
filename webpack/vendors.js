@@ -12,8 +12,10 @@ const config = {
       'react',
       'react-dom',
       'react-redux',
+      'react-konva',
       'redux',
       'redux-thunk',
+      'konva',
     ],
   },
   output: {

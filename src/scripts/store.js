@@ -1,10 +1,14 @@
 import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
 
-import count from 'reducers/count';
+import ticker from 'reducers/ticker';
+import paddle from 'reducers/paddle';
+import ball from 'reducers/ball';
 
 const reducer = combineReducers({
-  count,
+  ticker,
+  paddle,
+  ball,
 });
 
 const initialState = {};

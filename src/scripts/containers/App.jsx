@@ -1,20 +1,25 @@
 import React, { PropTypes, Component } from 'react';
 import { connect } from 'react-redux';
+import { Layer, Stage } from 'react-konva';
 
-import { increment, decrement } from 'actions/count';
+import Paddle from 'components/Paddle';
+import Ball from 'components/Ball';
+
+import { tickTime, tickerStarted } from 'actions';
 
 import 'styles/main';
 
 const mapStateToProps = (state) => ({
-  count: state.count,
+  tickerStarted: state.ticker.tickerStarted,
+  lastFrameTime: state.ticker.lastFrameTime,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  onIncrement: () => {
-    dispatch(increment());
+  onTickTime(timestamp) {
+    dispatch(tickTime(timestamp));
   },
-  onDecrement: () => {
-    dispatch(decrement());
+  onTickerStarted() {
+    dispatch(tickerStarted());
   },
 });
 
@@ -22,35 +27,46 @@ const mapDispatchToProps = (dispatch) => ({
 
 export default class App extends Component {
   static propTypes = {
-    count: PropTypes.number.isRequired,
-    onIncrement: PropTypes.func.isRequired,
-    onDecrement: PropTypes.func.isRequired,
+    tickerStarted: PropTypes.bool.isRequired,
+    lastFrameTime: PropTypes.number.isRequired,
+    onTickTime: PropTypes.func.isRequired,
+    onTickerStarted: PropTypes.func.isRequired,
   };
 
-  constructor(props) {
-    super(props);
-
-    this.buttonClicked = ::this.buttonClicked;
+  componentDidMount() {
+    this.startTicker();
   }
 
-  buttonClicked(event) {
-    const { onIncrement, onDecrement } = this.props;
-    if (event.target.id === 'increment') {
-      onIncrement();
-    } else {
-      onDecrement();
+  startTicker() {
+    const { onTickerStarted } = this.props;
+
+    if (!this.props.tickerStarted) {
+      onTickerStarted();
+      setTimeout(::this.animate, 1);
+    }
+  }
+
+  animate(timestamp = 0) {
+    const { onTickTime } = this.props;
+
+    if (this.props.tickerStarted) {
+      onTickTime(timestamp);
+      window.requestAnimationFrame(::this.animate);
     }
   }
 
   render() {
-    const { count } = this.props;
     return (
-      <div className="App">
-        <h2>App</h2>
-        <span>Count: {count}</span>
-        <button id="increment" onClick={this.buttonClicked}>INCREMENT</button>
-        <button id="decrement" onClick={this.buttonClicked}>DECREMENT</button>
-      </div>
+      <Stage
+        ref="stage"
+        width={window.innerWidth}
+        height={window.innerHeight}
+      >
+        <Layer>
+          <Paddle />
+          <Ball />
+        </Layer>
+      </Stage>
     );
   }
 }
