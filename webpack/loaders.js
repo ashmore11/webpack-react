@@ -10,7 +10,7 @@ const loaders = [{
   loader: 'babel',
   include: `${PATHS.src}/scripts`,
   query: {
-    cacheDirectory: true,
+    cacheDirectory: './webpack_cache/',
     presets: [
       'react',
       'es2015',
